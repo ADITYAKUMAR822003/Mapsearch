@@ -59,9 +59,6 @@ const SearchServices = () => {
                             setLongitude(longitude);
                             console.log("Latitude:", latitude);
                             console.log("Longitude:", longitude);
-                            const tweetText = `My current location: Latitude ${info.coords.latitude}, Longitude ${info.coords.longitude}`;
-                            const url = `https://twitter.com/intent/tweet?text=${encodeURIComponent(tweetText)}`;
-                            console.log("Twitter URL:", url);
                         },
                         (error) => {
                             console.error("Geolocation Error:", error);

@@ -1,5 +1,5 @@
 import React, { useState, useCallback, useEffect } from 'react';
-import { Text, View, StyleSheet, ActivityIndicator, TouchableOpacity, Alert } from 'react-native';
+import { Text, View, StyleSheet, ActivityIndicator, Alert } from 'react-native';
 import { useNavigation, useRoute, useFocusEffect } from '@react-navigation/native';
 import CustomSelectList from '../components/CustomSelectList';
 import CustomButton from '../components/CustomButton';

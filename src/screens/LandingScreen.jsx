@@ -26,8 +26,8 @@ const LandingScreen = () => {
         source={require('../assets/images/man.png')}
         style={styles.bannerImage}
       />
-      <Text style={styles.title}>Lorem ipsum dolor.</Text>
-      <Text style={styles.subTitle}>Hello MR.Aditya kumar, How are you?</Text>
+      <Text style={styles.title}>Welcome to Service Search!</Text>
+      <Text style={styles.subTitle}>Our services are now just a click away!</Text>
       <View style={styles.buttonContainer}>
         <TouchableOpacity
           style={[

@@ -1,11 +1,11 @@
 import React, { useState, useCallback } from 'react';
 import { StyleSheet, Text, ActivityIndicator, TouchableOpacity, View, Alert } from 'react-native';
+import Strings from '../localization/strings';
 import { GlobalStyle } from '../styles/GlobalStyle';
 import CustomButton from '../components/CustomButton';
 import { colors } from '../utility/colors';
 import CustomTextInput from '../components/CustomTextInput';
 import { useNavigation, useFocusEffect } from '@react-navigation/native';
-import Strings from '../localization/strings';
 import Config from 'react-native-config';
 import axios from 'axios';
 

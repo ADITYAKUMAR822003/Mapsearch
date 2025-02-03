@@ -86,11 +86,7 @@ const ResetPassword = () => {
         <Text style={GlobalStyle.headingText}>{Strings.passwordPlaceholder}</Text>
       </View>
       <View>
-        <CustomTextInput
-          value={username}
-          iconName="user"
-          editable={false}
-        />
+        <CustomTextInput value={username} iconName="user" editable={false} />
         <CustomTextInput
           value={newPassword}
           onChangeText={setPassword}
