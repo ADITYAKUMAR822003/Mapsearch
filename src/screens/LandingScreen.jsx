@@ -1,10 +1,10 @@
 import * as React from 'react';
 import { Image, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
+import { GlobalStyle } from '../styles/GlobalStyle';
 import Strings from '../localization/strings';
 import { colors } from '../utility/colors';
 import { fonts } from '../utility/fonts';
-
 const LandingScreen = () => {
   const navigation = useNavigation();
 
@@ -17,9 +17,10 @@ const LandingScreen = () => {
   };
 
   return (
-    <View style={styles.container}>
+    <View style={GlobalStyle.container}>
       <Image source={require('../assets/images/man.png')} style={styles.bannerImage} />
       <Text style={styles.title}>Welcome to Service Search!</Text>
+      <Text style={styles.subTitle}>Our services are now just a click away!</Text>
       <View style={styles.buttonContainer}>
         <TouchableOpacity
           style={[
@@ -46,9 +47,9 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   bannerImage: {
-    marginVertical: 20,
-    height: 250,
-    width: 231,
+    marginVertical: 30,
+    height: "40%",
+    width: "100%",
   },
   title: {
     fontSize: 40,
@@ -56,7 +57,15 @@ const styles = StyleSheet.create({
     paddingHorizontal: 20,
     textAlign: 'center',
     color: colors.primary,
-    marginTop: 10,
+    marginVertical: 20,
+  },
+  subTitle: {
+    fontSize: 18,
+    paddingHorizontal: 20,
+    textAlign: 'center',
+    color: colors.secondary,
+    fontFamily: fonts.Medium,
+    marginVertical: 20,
   },
   buttonContainer: {
     marginTop: 10,
@@ -66,6 +75,7 @@ const styles = StyleSheet.create({
     width: '80%',
     height: 60,
     borderRadius: 100,
+    alignSelf: 'center',
   },
   loginButtonWrapper: {
     justifyContent: 'center',
