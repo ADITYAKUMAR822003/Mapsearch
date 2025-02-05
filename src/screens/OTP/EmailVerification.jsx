@@ -124,9 +124,7 @@ const EmailVerification = () => {
       <BackButton onPress={handleGoBack} />
       <View style={GlobalStyle.textContainer}>
         <Text style={GlobalStyle.headingText}>{Strings.otpTitle}</Text>
-        <Text style={GlobalOTPStyle.headingContent}>
-          {Strings.otpSubTitleEmail}
-        </Text>
+        <Text style={GlobalOTPStyle.headingContent}>{Strings.otpSubTitleEmail}</Text>
       </View>
       <View>
         {error.otp && <Text style={GlobalOTPStyle.errorOTP}>{error.otp}</Text>}

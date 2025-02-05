@@ -36,6 +36,8 @@ const SearchServices = () => {
     const [radius, setRadius] = useState(500.0);
     const [error, setError] = useState('');
     const placesRef = useRef(null);
+    const [editable, setEditable] = useState(false);
+    const [ab, setAB] = useState(false);
 
     const requestLocationPermission = async () => {
         if (Platform.OS === 'android') {
@@ -100,6 +102,9 @@ const SearchServices = () => {
                 }
             };
             fetchAddress();
+            return () => {
+                setEditable(false);
+            };
         }, [latitude, longitude, googlePlaceApiKey])
     );
 
@@ -144,6 +149,9 @@ const SearchServices = () => {
                 }
             };
             userServices();
+            return () => {
+                setEditable(false);
+            };
         }, [baseUrl, username])
     );
 
@@ -179,6 +187,7 @@ const SearchServices = () => {
     };
 
     const handleHome = async () => {
+        setEditable(false);
         if (!validateInput()) return;
         try {
             setLoading(true);
@@ -249,7 +258,6 @@ const SearchServices = () => {
                     </View>
                     {!reset && (
                         <>
-                            <CustomTextInput iconEmail="location-outline" value={address} />
                             <GooglePlacesAutocomplete
                                 ref={placesRef}
                                 placeholder='Search Location'
@@ -264,6 +272,8 @@ const SearchServices = () => {
                                     setLongitude(lng);
                                     console.log("Latitude:", lat);
                                     console.log("Longitude:", lng);
+                                    setEditable(true);
+                                    setAddress(data.description);
                                 }}
                                 query={{ key: googlePlaceApiKey, language: 'en', types: 'address', }}
                                 onFail={(error) => {
@@ -275,10 +285,28 @@ const SearchServices = () => {
                                     Alert.alert("Timeout", "The request timed out. Please check your connection and try again.");
                                 }}
                                 renderLeftButton={() => <FontAwesome5 name="search-location" size={20} style={styles.icon} />}
-                                renderRightButton={() => <FontAwesome name="times-circle" size={20} style={styles.icon} onPress={handleClear} />}
+                                renderRightButton={() => (
+                                    <FontAwesome
+                                        name="times-circle"
+                                        size={20}
+                                        style={styles.icon}
+                                        onPress={() => {
+                                            setAddress('');
+                                            placesRef.current?.setAddressText('');
+                                            setEditable(true);
+                                        }
+                                        }
+                                    />
+                                )}
                                 renderRow={(data) => (<View><Text style={styles.rowText}>{data.description}</Text></View>)}
                                 styles={{ textInputContainer: styles.inputContainer, textInput: styles.textInput, listView: styles.listView }}
-                                textInputProps={{ placeholderTextColor: colors.secondary, keyboardType: 'default', autoCapitalize: 'words', }}
+                                textInputProps={{
+                                    onChangeText: (text) => {
+                                        if (editable) {
+                                            setAddress(text);
+                                        }
+                                    }, value: address, placeholderTextColor: colors.secondary, keyboardType: 'default', autoCapitalize: 'words',
+                                }}
                                 listLoaderComponent={
                                     <View style={styles.loaderContainer}>
                                         <ActivityIndicator size="small" color={colors.primary} />

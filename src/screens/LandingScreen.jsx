@@ -18,16 +18,8 @@ const LandingScreen = () => {
 
   return (
     <View style={styles.container}>
-      <Image
-        source={require('../assets/images/logo.png')}
-        style={styles.logo}
-      />
-      <Image
-        source={require('../assets/images/man.png')}
-        style={styles.bannerImage}
-      />
+      <Image source={require('../assets/images/man.png')} style={styles.bannerImage} />
       <Text style={styles.title}>Welcome to Service Search!</Text>
-      <Text style={styles.subTitle}>Our services are now just a click away!</Text>
       <View style={styles.buttonContainer}>
         <TouchableOpacity
           style={[
@@ -53,11 +45,6 @@ const styles = StyleSheet.create({
     backgroundColor: colors.white,
     alignItems: 'center',
   },
-  logo: {
-    height: 40,
-    width: 140,
-    marginVertical: 30,
-  },
   bannerImage: {
     marginVertical: 20,
     height: 250,
@@ -70,14 +57,6 @@ const styles = StyleSheet.create({
     textAlign: 'center',
     color: colors.primary,
     marginTop: 10,
-  },
-  subTitle: {
-    fontSize: 18,
-    paddingHorizontal: 20,
-    textAlign: 'center',
-    color: colors.secondary,
-    fontFamily: fonts.Medium,
-    marginVertical: 20,
   },
   buttonContainer: {
     marginTop: 10,

@@ -15,12 +15,12 @@ const DisplayServices = () => {
             <ScrollView>
                 {Array.isArray(places) && places.length > 0 && !places.some(place => place?.error) ? (
                     <>
-                        <Text style={GlobalStyle.headingText}>Available Services</Text>
+                        <Text style={GlobalStyle.headingText}>List of {includedTypes} nearby</Text>
                         {places.map((place, index) => (
                             <View key={index} style={styles.card}>
-                                {['displayName', 'formattedAddress', 'rating', 'userRatingCount', 'paymentOptions', 'nationalPhoneNumber'].map((key) => {
+                                {place?.displayName && <Text style={styles.name}>{place.displayName}</Text>}
+                                {['formattedAddress', 'rating', 'userRatingCount', 'paymentOptions', 'nationalPhoneNumber'].map((key) => {
                                     const keyDisplayNameMap = {
-                                        displayName: 'Name',
                                         formattedAddress: 'Address',
                                         rating: 'Rating',
                                         userRatingCount: 'User Ratings',
@@ -57,8 +57,8 @@ const DisplayServices = () => {
                 )}
             </ScrollView>
         </View>
-    )
-}
+    );
+};
 
 export default DisplayServices;
 
@@ -73,6 +73,12 @@ const styles = StyleSheet.create({
         shadowRadius: 5,
         shadowOffset: { width: 0, height: 3 },
         elevation: 3,
+    },
+    name: {
+        fontSize: 20,
+        fontFamily: fonts.SemiBold,
+        textAlign: 'center',
+        color: colors.primary,
     },
     item: {
         flexDirection: 'row',
