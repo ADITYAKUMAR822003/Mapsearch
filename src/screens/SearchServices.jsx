@@ -5,7 +5,6 @@ import { GooglePlacesAutocomplete } from 'react-native-google-places-autocomplet
 import FontAwesome from 'react-native-vector-icons/FontAwesome';
 import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
 import CustomSelectList from '../components/CustomSelectList';
-import CustomTextInput from '../components/CustomTextInput';
 import Geolocation from 'react-native-geolocation-service';
 import CustomButton from '../components/CustomButton';
 import { GlobalStyle } from '../styles/GlobalStyle';
@@ -37,7 +36,6 @@ const SearchServices = () => {
     const [error, setError] = useState('');
     const placesRef = useRef(null);
     const [editable, setEditable] = useState(false);
-    const [ab, setAB] = useState(false);
 
     const requestLocationPermission = async () => {
         if (Platform.OS === 'android') {
@@ -63,7 +61,7 @@ const SearchServices = () => {
                             console.log("Longitude:", longitude);
                         },
                         (error) => {
-                            console.error("Geolocation Error:", error);
+                            console.log("Geolocation Error:", error);
                             Alert.alert("Error", "Unable to fetch location. Please try again.");
                         },
                         { enableHighAccuracy: true, timeout: 60000, maximumAge: 10000 }
@@ -250,9 +248,7 @@ const SearchServices = () => {
         <KeyboardAvoidingView style={GlobalStyle.container}>
             <ScrollView keyboardShouldPersistTaps="handled" contentContainerStyle={{ flexGrow: 1 }} >
                 <View>
-                    {loading && (
-                        <ActivityIndicator size="50" color={colors.success} style={GlobalStyle.loader} />
-                    )}
+                    {loading && <ActivityIndicator size={50} color={colors.success} style={GlobalStyle.loader} />}
                     <View>
                         <Text style={GlobalStyle.headingText}>Search Your Services</Text>
                     </View>

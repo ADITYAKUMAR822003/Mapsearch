@@ -1,5 +1,5 @@
 import React, { useState, useCallback } from 'react';
-import { Text, ActivityIndicator, TouchableOpacity, View, Alert } from 'react-native';
+import { Text, ActivityIndicator, TouchableOpacity, View, Alert, SafeAreaView } from 'react-native';
 import { GlobalStyle } from '../styles/GlobalStyle';
 import { colors } from '../utility/colors';
 import CustomButton from '../components/CustomButton';
@@ -19,6 +19,8 @@ const SignupScreen = () => {
   const [password, setPassword] = useState('');
   const [mobileNumber, setPhoneNumber] = useState('');
   const [error, setError] = useState('');
+
+  const handleLogin = () => navigation.navigate('LoginScreen');
 
   const validateInput = () => {
     const newErrors = {};
@@ -83,12 +85,7 @@ const SignupScreen = () => {
     }
   };
 
-  const clearFields = () => {
-    setUsername('');
-    setPassword('');
-    setPhoneNumber('');
-    setEmail('');
-  };
+  const clearFields = () => (setUsername(''), setPassword(''), setPhoneNumber(''), setEmail(''));
 
   useFocusEffect(
     useCallback(() => {
@@ -100,63 +97,59 @@ const SignupScreen = () => {
     }, []),
   );
 
-  const handleLogin = () => {
-    navigation.navigate('LoginScreen');
-  };
-
   return (
-    <View style={GlobalStyle.container}>
-      {loading && (
-        <ActivityIndicator size="50" color={colors.success} style={GlobalStyle.loader} />
-      )}
-      <View style={GlobalStyle.textContainer}>
-        <Text style={GlobalStyle.headingText}>{Strings.signupTitle}</Text>
+    <SafeAreaView style={{ flex: 1 }}>
+      <View style={GlobalStyle.container}>
+        {loading && <ActivityIndicator size={50} color={colors.success} style={GlobalStyle.loader} />}
+        <View style={GlobalStyle.textContainer}>
+          <Text style={GlobalStyle.headingText}>{Strings.signupTitle}</Text>
+        </View>
+        <View>
+          <CustomTextInput
+            value={username}
+            onChangeText={setUsername}
+            placeholder={Strings.usernamePlaceholder}
+            iconName="user"
+            errorMessage={error.username}
+          />
+          <CustomTextInput
+            value={email}
+            onChangeText={setEmail}
+            placeholder={Strings.emailPlaceholder}
+            keyboardType="email-address"
+            iconEmail="mail-outline"
+            errorMessage={error.email}
+          />
+          <CustomTextInput
+            value={password}
+            onChangeText={setPassword}
+            placeholder={Strings.passwordPlaceholder}
+            iconName="lock"
+            secureTextEntry={secureEntery}
+            onPress={() => setSecureEntery(!secureEntery)}
+            eyename={'eye'}
+            errorMessage={error.password}
+          />
+          <CustomTextInput
+            value={mobileNumber}
+            onChangeText={setPhoneNumber}
+            placeholder={Strings.mobilePlaceholder}
+            keyboardType="phone-pad"
+            iconName="screen-smartphone"
+            maxLength={10}
+            errorMessage={error.mobileNumber}
+          />
+        </View>
+        <CustomButton title={Strings.signupButton} onPress={handleSignUp} />
+        <Text style={GlobalStyle.continueText}>{Strings.orContinue}</Text>
+        <View style={GlobalStyle.footerContainer}>
+          <Text style={GlobalStyle.accountText}>{Strings.alreadyHave}</Text>
+          <TouchableOpacity onPress={handleLogin}>
+            <Text style={GlobalStyle.signupText}>{Strings.loginButton}</Text>
+          </TouchableOpacity>
+        </View>
       </View>
-      <View>
-        <CustomTextInput
-          value={username}
-          onChangeText={setUsername}
-          placeholder={Strings.usernamePlaceholder}
-          iconName="user"
-          errorMessage={error.username}
-        />
-        <CustomTextInput
-          value={email}
-          onChangeText={setEmail}
-          placeholder={Strings.emailPlaceholder}
-          keyboardType="email-address"
-          iconEmail="mail-outline"
-          errorMessage={error.email}
-        />
-        <CustomTextInput
-          value={password}
-          onChangeText={setPassword}
-          placeholder={Strings.passwordPlaceholder}
-          iconName="lock"
-          secureTextEntry={secureEntery}
-          onPress={() => setSecureEntery(!secureEntery)}
-          eyename={'eye'}
-          errorMessage={error.password}
-        />
-        <CustomTextInput
-          value={mobileNumber}
-          onChangeText={setPhoneNumber}
-          placeholder={Strings.mobilePlaceholder}
-          keyboardType="phone-pad"
-          iconName="screen-smartphone"
-          maxLength={10}
-          errorMessage={error.mobileNumber}
-        />
-      </View>
-      <CustomButton title={Strings.signupButton} onPress={handleSignUp} />
-      <Text style={GlobalStyle.continueText}>{Strings.orContinue}</Text>
-      <View style={GlobalStyle.footerContainer}>
-        <Text style={GlobalStyle.accountText}>{Strings.alreadyHave}</Text>
-        <TouchableOpacity onPress={handleLogin}>
-          <Text style={GlobalStyle.signupText}>{Strings.loginButton}</Text>
-        </TouchableOpacity>
-      </View>
-    </View>
+    </SafeAreaView>
   );
 };
 

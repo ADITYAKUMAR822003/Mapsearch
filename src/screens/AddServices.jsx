@@ -152,9 +152,7 @@ const AddServices = () => {
 
     return (
         <View style={GlobalStyle.container}>
-            {loading && (
-                <ActivityIndicator size="50" color={colors.success} style={GlobalStyle.loader} />
-            )}
+            {loading && <ActivityIndicator size={50} color={colors.success} style={GlobalStyle.loader} />}
             <View>
                 <Text style={styles.headingText}>{Strings.addYour}</Text>
             </View>

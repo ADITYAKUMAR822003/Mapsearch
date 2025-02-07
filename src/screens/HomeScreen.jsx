@@ -16,15 +16,9 @@ const HomeScreen = () => {
   const [loading, setLoading] = useState(false);
   const [services, setServices] = useState([]);
 
-  const addServices = () => {
-    navigation.navigate('AddServices');
-  };
-  const deleteServices = () => {
-    navigation.navigate('DeleteServices');
-  };
-  const searchServices = () => {
-    navigation.navigate('SearchServices');
-  };
+  const addServices = () => navigation.navigate('AddServices');
+  const deleteServices = () => navigation.navigate('DeleteServices');
+  const searchServices = () => navigation.navigate('SearchServices');
 
   useFocusEffect(
     useCallback(() => {
@@ -55,9 +49,7 @@ const HomeScreen = () => {
 
   return (
     <View style={GlobalStyle.container}>
-      {loading && (
-        <ActivityIndicator size="50" color={colors.success} style={GlobalStyle.loader} />
-      )}
+      {loading && <ActivityIndicator size={50} color={colors.success} style={GlobalStyle.loader} />}
       <Text style={GlobalStyle.headingText}>
         {services && services.some(user => Object.keys(user.services || {}).length > 0) ? Strings.yourAdded : Strings.addYour}
       </Text>
@@ -95,7 +87,6 @@ const HomeScreen = () => {
             </TouchableOpacity>
           </>
         )}
-
       </View>
     </View>
   );

@@ -22,6 +22,8 @@ const ResetPassword = () => {
   const [secureConfirm, setSecureConfirm] = useState(true);
   const [error, setError] = useState('');
 
+  const handleGoBack = () => navigation.navigate('ForgotPassword');
+
   const validateInput = () => {
     const newErrors = {};
     if (!newPassword.trim()) {
@@ -67,20 +69,11 @@ const ResetPassword = () => {
     }
   };
 
-  const clearFields = () => {
-    setPassword('');
-    setConfirmPassword('');
-  };
-
-  const handleGoBack = () => {
-    navigation.navigate('ForgotPassword');
-  };
+  const clearFields = () => (setPassword(''), setConfirmPassword(''));
 
   return (
     <View style={GlobalStyle.container}>
-      {loading && (
-        <ActivityIndicator size="50" color={colors.success} style={GlobalStyle.loader} />
-      )}
+      {loading && <ActivityIndicator size={50} color={colors.success} style={GlobalStyle.loader} />}
       <BackButton onPress={handleGoBack} />
       <View style={GlobalStyle.textContainer}>
         <Text style={GlobalStyle.headingText}>{Strings.passwordPlaceholder}</Text>

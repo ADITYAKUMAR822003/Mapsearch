@@ -16,6 +16,8 @@ const ForgotPassword = () => {
     const [loading, setLoading] = useState(false);
     const [username, setUsername] = useState('');
     const [error, setError] = useState('');
+    
+    const handleGoBack = () => navigation.goBack();
 
     const validateInput = () => {
         const newErrors = {};
@@ -56,20 +58,11 @@ const ForgotPassword = () => {
             setLoading(false);
         }
     };
-
-    const clearFields = () => {
-        setUsername('');
-    };
-
-    const handleGoBack = () => {
-        navigation.goBack();
-    };
+    const clearFields = () => setUsername('');
 
     return (
         <View style={GlobalStyle.container}>
-            {loading && (
-                <ActivityIndicator size="50" color={colors.success} style={GlobalStyle.loader} />
-            )}
+            {loading && <ActivityIndicator size={50} color={colors.success} style={GlobalStyle.loader} />}
             <BackButton onPress={handleGoBack} />
             <View style={GlobalStyle.textContainer}>
                 <Text style={GlobalStyle.headingText}>{Strings.resetTitle}</Text>

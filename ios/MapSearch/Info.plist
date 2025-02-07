@@ -30,8 +30,11 @@
 		<true/>
 		<key>NSExceptionDomains</key>
 		<dict>
-			<key>com.ns.MapSearch</key>
-			<string></string>
+			<key>ec2-3-8-187-181.eu-west-2.compute.amazonaws.com</key>
+			<dict>
+				<key>NSExceptionAllowsInsecureHTTPLoads</key>
+				<true/>
+			</dict>
 		</dict>
 		<key>NSAllowsLocalNetworking</key>
 		<true/>

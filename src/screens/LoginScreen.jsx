@@ -1,5 +1,5 @@
 import React, { useState, useCallback } from 'react';
-import { StyleSheet, Text, ActivityIndicator, TouchableOpacity, View, Alert } from 'react-native';
+import { StyleSheet, Text, ActivityIndicator, TouchableOpacity, View, Alert, SafeAreaView } from 'react-native';
 import Strings from '../localization/strings';
 import { GlobalStyle } from '../styles/GlobalStyle';
 import CustomButton from '../components/CustomButton';
@@ -22,6 +22,9 @@ const LoginScreen = () => {
   const [mobileNumber, setPhoneNumber] = useState('');
   const [email, setEmail] = useState('');
   const [error, setError] = useState('');
+
+  const handleForgot = () => navigation.navigate('ForgotPassword');
+  const handleSignup = () => navigation.navigate('SignupScreen');
 
   const validateUser = () => {
     const newErrors = {};
@@ -152,93 +155,85 @@ const LoginScreen = () => {
     setError('');
   };
 
-  const handleForgot = () => {
-    navigation.navigate('ForgotPassword');
-  };
-
-  const handleSignup = () => {
-    navigation.navigate('SignupScreen');
-  };
-
   return (
-    <View style={GlobalStyle.container}>
-      {loading && (
-        <ActivityIndicator size="50" color={colors.success} style={GlobalStyle.loader} />
-      )}
-      <View style={GlobalStyle.textContainer}>
-        <Text style={GlobalStyle.headingText}>{Strings.loginTitle}</Text>
+    <SafeAreaView style={{ flex: 1 }}>
+      <View style={GlobalStyle.container}>
+        {loading && <ActivityIndicator size={50} color={colors.success} style={GlobalStyle.loader} />}
+        <View style={GlobalStyle.textContainer}>
+          <Text style={GlobalStyle.headingText}>{Strings.loginTitle}</Text>
+        </View>
+        <View style={styles.headerContainer}>
+          <TouchableOpacity onPress={handleUserClick}>
+            <Text style={[GlobalStyle.signupText, showUser && GlobalStyle.selectedText]}>{Strings.username}</Text>
+          </TouchableOpacity>
+          <TouchableOpacity onPress={handlePhoneClick}>
+            <Text style={[GlobalStyle.signupText, showPhone && GlobalStyle.selectedText]}>{Strings.mobile}</Text>
+          </TouchableOpacity>
+          <TouchableOpacity onPress={handleEmailClick}>
+            <Text style={[GlobalStyle.signupText, showEmail && GlobalStyle.selectedText]}>{Strings.email}</Text>
+          </TouchableOpacity>
+        </View>
+        <View>
+          {showUser && (
+            <View>
+              <CustomTextInput
+                value={username}
+                onChangeText={setUsername}
+                placeholder={Strings.usernamePlaceholder}
+                iconName="user"
+                errorMessage={error.username}
+              />
+              <CustomTextInput
+                value={password}
+                onChangeText={setPassword}
+                placeholder={Strings.passwordPlaceholder}
+                iconName="lock"
+                secureTextEntry={secureEntery}
+                onPress={() => setSecureEntery(!secureEntery)}
+                eyename={'eye'}
+                errorMessage={error.password}
+              />
+              <TouchableOpacity>
+                <Text onPress={handleForgot} style={GlobalStyle.forgotPasswordText}>{Strings.forgot}</Text>
+              </TouchableOpacity>
+            </View>
+          )}
+          {showPhone && (
+            <View>
+              <CustomTextInput
+                value={mobileNumber}
+                onChangeText={setPhoneNumber}
+                placeholder={Strings.mobilePlaceholder}
+                keyboardType="phone-pad"
+                iconName="screen-smartphone"
+                maxLength={10}
+                errorMessage={error.mobileNumber}
+              />
+            </View>
+          )}
+          {showEmail && (
+            <View>
+              <CustomTextInput
+                value={email}
+                onChangeText={setEmail}
+                placeholder={Strings.emailPlaceholder}
+                keyboardType="email-address"
+                iconEmail="mail-outline"
+                errorMessage={error.email}
+              />
+            </View>
+          )}
+        </View>
+        <CustomButton title={Strings.loginButton} onPress={handleLogin} />
+        <Text style={GlobalStyle.continueText}>{Strings.orContinue}</Text>
+        <View style={GlobalStyle.footerContainer}>
+          <Text style={GlobalStyle.accountText}>{Strings.dontHave}</Text>
+          <TouchableOpacity onPress={handleSignup}>
+            <Text style={GlobalStyle.signupText}>{Strings.signupButton}</Text>
+          </TouchableOpacity>
+        </View>
       </View>
-      <View style={styles.headerContainer}>
-        <TouchableOpacity onPress={handleUserClick}>
-          <Text style={[GlobalStyle.signupText, showUser && GlobalStyle.selectedText]}>{Strings.username}</Text>
-        </TouchableOpacity>
-        <TouchableOpacity onPress={handlePhoneClick}>
-          <Text style={[GlobalStyle.signupText, showPhone && GlobalStyle.selectedText]}>{Strings.mobile}</Text>
-        </TouchableOpacity>
-        <TouchableOpacity onPress={handleEmailClick}>
-          <Text style={[GlobalStyle.signupText, showEmail && GlobalStyle.selectedText]}>{Strings.email}</Text>
-        </TouchableOpacity>
-      </View>
-      <View>
-        {showUser && (
-          <View>
-            <CustomTextInput
-              value={username}
-              onChangeText={setUsername}
-              placeholder={Strings.usernamePlaceholder}
-              iconName="user"
-              errorMessage={error.username}
-            />
-            <CustomTextInput
-              value={password}
-              onChangeText={setPassword}
-              placeholder={Strings.passwordPlaceholder}
-              iconName="lock"
-              secureTextEntry={secureEntery}
-              onPress={() => setSecureEntery(!secureEntery)}
-              eyename={'eye'}
-              errorMessage={error.password}
-            />
-            <TouchableOpacity>
-              <Text onPress={handleForgot} style={GlobalStyle.forgotPasswordText}>{Strings.forgot}</Text>
-            </TouchableOpacity>
-          </View>
-        )}
-        {showPhone && (
-          <View>
-            <CustomTextInput
-              value={mobileNumber}
-              onChangeText={setPhoneNumber}
-              placeholder={Strings.mobilePlaceholder}
-              keyboardType="phone-pad"
-              iconName="screen-smartphone"
-              maxLength={10}
-              errorMessage={error.mobileNumber}
-            />
-          </View>
-        )}
-        {showEmail && (
-          <View>
-            <CustomTextInput
-              value={email}
-              onChangeText={setEmail}
-              placeholder={Strings.emailPlaceholder}
-              keyboardType="email-address"
-              iconEmail="mail-outline"
-              errorMessage={error.email}
-            />
-          </View>
-        )}
-      </View>
-      <CustomButton title={Strings.loginButton} onPress={handleLogin} />
-      <Text style={GlobalStyle.continueText}>{Strings.orContinue}</Text>
-      <View style={GlobalStyle.footerContainer}>
-        <Text style={GlobalStyle.accountText}>{Strings.dontHave}</Text>
-        <TouchableOpacity onPress={handleSignup}>
-          <Text style={GlobalStyle.signupText}>{Strings.signupButton}</Text>
-        </TouchableOpacity>
-      </View>
-    </View>
+    </SafeAreaView>
   );
 };
 

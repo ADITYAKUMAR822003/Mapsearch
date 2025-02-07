@@ -1,5 +1,5 @@
 import React, { useState, useRef, useEffect } from 'react';
-import { Text, TextInput, ActivityIndicator, TouchableOpacity, View, Alert } from 'react-native';
+import { Text, TextInput, ActivityIndicator, TouchableOpacity, View, Alert, SafeAreaView } from 'react-native';
 import { GlobalStyle } from '../../styles/GlobalStyle';
 import { GlobalOTPStyle } from '../../styles/GlobalOTPStyle';
 import BackButton from '../../components/BackButton';
@@ -29,6 +29,7 @@ const EmailVerification = () => {
     return Object.values(isotp).join('');
   };
   const otp = getOtpString();
+  const handleGoBack = () => navigation.goBack();
 
   const validateInput = () => {
     const newErrors = {};
@@ -112,89 +113,85 @@ const EmailVerification = () => {
     firstInput.current.focus();
   };
 
-  const handleGoBack = () => {
-    navigation.goBack();
-  };
-
   return (
-    <View style={GlobalStyle.container}>
-      {loading && (
-        <ActivityIndicator size="50" color={colors.success} style={GlobalStyle.loader} />
-      )}
-      <BackButton onPress={handleGoBack} />
-      <View style={GlobalStyle.textContainer}>
-        <Text style={GlobalStyle.headingText}>{Strings.otpTitle}</Text>
-        <Text style={GlobalOTPStyle.headingContent}>{Strings.otpSubTitleEmail}</Text>
-      </View>
-      <View>
-        {error.otp && <Text style={GlobalOTPStyle.errorOTP}>{error.otp}</Text>}
-        <View style={GlobalOTPStyle.otpContainer}>
-          <View style={GlobalOTPStyle.otpBox}>
-            <TextInput
-              style={GlobalOTPStyle.otpText}
-              keyboardType="number-pad"
-              maxLength={1}
-              ref={firstInput}
-              onChangeText={text => {
-                setOtp({ ...isotp, 1: text });
-                text && secondInput.current.focus();
-              }}
-            />
-          </View>
-          <View style={GlobalOTPStyle.otpBox}>
-            <TextInput
-              style={GlobalOTPStyle.otpText}
-              keyboardType="number-pad"
-              maxLength={1}
-              ref={secondInput}
-              onChangeText={text => {
-                setOtp({ ...isotp, 2: text });
-                text ? thirdInput.current.focus() : firstInput.current.focus();
-              }}
-            />
-          </View>
-          <View style={GlobalOTPStyle.otpBox}>
-            <TextInput
-              style={GlobalOTPStyle.otpText}
-              keyboardType="number-pad"
-              maxLength={1}
-              ref={thirdInput}
-              onChangeText={text => {
-                setOtp({ ...isotp, 3: text });
-                text
-                  ? fourthInput.current.focus()
-                  : secondInput.current.focus();
-              }}
-            />
-          </View>
-          <View style={GlobalOTPStyle.otpBox}>
-            <TextInput
-              style={GlobalOTPStyle.otpText}
-              keyboardType="number-pad"
-              maxLength={1}
-              ref={fourthInput}
-              onChangeText={text => {
-                setOtp({ ...isotp, 4: text });
-                !text && thirdInput.current.focus();
-              }}
-            />
-          </View>
+    <SafeAreaView style={{ flex: 1 }}>
+      <View style={GlobalStyle.container}>
+        {loading && <ActivityIndicator size={50} color={colors.success} style={GlobalStyle.loader} />}
+        <BackButton onPress={handleGoBack} />
+        <View style={GlobalStyle.textContainer}>
+          <Text style={GlobalStyle.headingText}>{Strings.otpTitle}</Text>
+          <Text style={GlobalOTPStyle.headingContent}>{Strings.otpSubTitleEmail}</Text>
         </View>
-        <View style={GlobalOTPStyle.footerContainer}>
-          <Text style={GlobalStyle.accountText}>
-            {timer > 0
-              ? `Resend OTP in ${timer} seconds`
-              : 'You can resend the OTP now'}
-          </Text>
-          <TouchableOpacity onPress={handleResendOTP} disabled={isResendActive}>
-            <Text style={GlobalStyle.forgotPasswordText}>
-              {isResendActive ? 'Wait for resend' : 'Resend OTP'}
+        <View>
+          {error.otp && <Text style={GlobalOTPStyle.errorOTP}>{error.otp}</Text>}
+          <View style={GlobalOTPStyle.otpContainer}>
+            <View style={GlobalOTPStyle.otpBox}>
+              <TextInput
+                style={GlobalOTPStyle.otpText}
+                keyboardType="number-pad"
+                maxLength={1}
+                ref={firstInput}
+                onChangeText={text => {
+                  setOtp({ ...isotp, 1: text });
+                  text && secondInput.current.focus();
+                }}
+              />
+            </View>
+            <View style={GlobalOTPStyle.otpBox}>
+              <TextInput
+                style={GlobalOTPStyle.otpText}
+                keyboardType="number-pad"
+                maxLength={1}
+                ref={secondInput}
+                onChangeText={text => {
+                  setOtp({ ...isotp, 2: text });
+                  text ? thirdInput.current.focus() : firstInput.current.focus();
+                }}
+              />
+            </View>
+            <View style={GlobalOTPStyle.otpBox}>
+              <TextInput
+                style={GlobalOTPStyle.otpText}
+                keyboardType="number-pad"
+                maxLength={1}
+                ref={thirdInput}
+                onChangeText={text => {
+                  setOtp({ ...isotp, 3: text });
+                  text
+                    ? fourthInput.current.focus()
+                    : secondInput.current.focus();
+                }}
+              />
+            </View>
+            <View style={GlobalOTPStyle.otpBox}>
+              <TextInput
+                style={GlobalOTPStyle.otpText}
+                keyboardType="number-pad"
+                maxLength={1}
+                ref={fourthInput}
+                onChangeText={text => {
+                  setOtp({ ...isotp, 4: text });
+                  !text && thirdInput.current.focus();
+                }}
+              />
+            </View>
+          </View>
+          <View style={GlobalOTPStyle.footerContainer}>
+            <Text style={GlobalStyle.accountText}>
+              {timer > 0
+                ? `Resend OTP in ${timer} seconds`
+                : 'You can resend the OTP now'}
             </Text>
-          </TouchableOpacity>
+            <TouchableOpacity onPress={handleResendOTP} disabled={isResendActive}>
+              <Text style={GlobalStyle.forgotPasswordText}>
+                {isResendActive ? 'Wait for resend' : 'Resend OTP'}
+              </Text>
+            </TouchableOpacity>
+          </View>
+          <CustomButton title={Strings.otpButton} onPress={handleVerifyOTP} disabled={isButtonDisabled} />
         </View>
-        <CustomButton title={Strings.otpButton} onPress={handleVerifyOTP} disabled={isButtonDisabled} />
       </View>
-    </View>
+    </SafeAreaView>
   );
 };
 
