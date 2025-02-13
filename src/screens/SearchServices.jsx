@@ -1,7 +1,8 @@
 import React, { useState, useCallback, useEffect, useRef } from 'react';
-import { Text, View, StyleSheet, ActivityIndicator, Alert, PermissionsAndroid, ScrollView, KeyboardAvoidingView, Platform } from 'react-native';
+import { Text, View, StyleSheet, ActivityIndicator, Alert, ScrollView, KeyboardAvoidingView, Platform } from 'react-native';
 import { useNavigation, useRoute, useFocusEffect } from '@react-navigation/native';
 import { GooglePlacesAutocomplete } from 'react-native-google-places-autocomplete';
+import { request, PERMISSIONS, RESULTS } from 'react-native-permissions';
 import FontAwesome from 'react-native-vector-icons/FontAwesome';
 import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
 import CustomSelectList from '../components/CustomSelectList';
@@ -38,13 +39,25 @@ const SearchServices = () => {
     const [editable, setEditable] = useState(false);
 
     const requestLocationPermission = async () => {
-        if (Platform.OS === 'android') {
-            const granted = await PermissionsAndroid.request(
-                PermissionsAndroid.PERMISSIONS.ACCESS_FINE_LOCATION,
-            );
-            return granted === PermissionsAndroid.RESULTS.GRANTED;
+        if (Platform.OS === 'ios') {
+            // const result = await request(PERMISSIONS.IOS.LOCATION_WHEN_IN_USE);
+            // console.log('iOS Location Permission Status:', result);
+            // return result === RESULTS.GRANTED;
+            const whenInUse = await request(PERMISSIONS.IOS.LOCATION_WHEN_IN_USE);
+            console.log('iOS LOCATION_WHEN_IN_USE:', whenInUse);
+            if (whenInUse === RESULTS.GRANTED) {
+                return true;
+            }
+            const always = await request(PERMISSIONS.IOS.LOCATION_ALWAYS);
+            console.log('iOS LOCATION_ALWAYS:', always);
+            return always === RESULTS.GRANTED;
+        } else if (Platform.OS === 'android') {
+            const result = await request(PERMISSIONS.ANDROID.ACCESS_FINE_LOCATION);
+            console.log('Android Permission Status:', result);
+            return result === RESULTS.GRANTED;
         }
-        return true;
+        console.log('Unsupported platform');
+        return false;
     };
 
     useFocusEffect(
@@ -62,7 +75,7 @@ const SearchServices = () => {
                         },
                         (error) => {
                             console.log("Geolocation Error:", error);
-                            Alert.alert("Error", "Unable to fetch location. Please try again.");
+                            Alert.alert("Permission Denied", "Unable to fetch location. Please check your settings.");
                         },
                         { enableHighAccuracy: true, timeout: 60000, maximumAge: 10000 }
                     );
