@@ -13,7 +13,7 @@ const Strings = {
   otpSubTitle: 'Enter 4 digits code received on your Mobile number',
   otpSubTitleEmail: 'Enter 4 digits code received on your Email Id',
   otpButton: 'Submit',
-  loginTitle: 'Hey, Welcome Back',
+  loginTitle: 'Sign In to Explore!',
   username: 'Username',
   mobile: 'Mobile Number',
   email: 'Email Id',

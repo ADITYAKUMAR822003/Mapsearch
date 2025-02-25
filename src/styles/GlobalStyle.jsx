@@ -52,9 +52,13 @@ export const GlobalStyle = StyleSheet.create({
   },
   loginButtonWrapper: {
     backgroundColor: colors.primary,
-    borderRadius: 100,
-    marginVertical: 20,
-  },
+    borderRadius: 12, 
+    marginVertical: 15,
+    // height: 50,
+    // width: 100,
+    justifyContent: 'center', 
+    alignItems: 'center', 
+},
   loginText: {
     color: colors.white,
     fontSize: 20,

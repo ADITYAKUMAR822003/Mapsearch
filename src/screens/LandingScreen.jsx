@@ -5,6 +5,7 @@ import { GlobalStyle } from '../styles/GlobalStyle';
 import Strings from '../localization/strings';
 import { colors } from '../utility/colors';
 import { fonts } from '../utility/fonts';
+// import LinearGradient from 'react-native-linear-gradient';
 
 const LandingScreen = () => {
   const navigation = useNavigation();
@@ -14,10 +15,11 @@ const LandingScreen = () => {
 
   return (
     <SafeAreaView style={{ flex: 1 }}>
-      <View style={GlobalStyle.container}>
+      {/* <LinearGradient colors={['#009AAA', '#001AA5']} style={styles.gradientBackground}></LinearGradient> */}
+      <View style={styles.container}>
         <Image source={require('../assets/images/man.png')} style={styles.bannerImage} />
         <Text style={styles.title}>Welcome to Service Search!</Text>
-        <Text style={styles.subTitle}>Our services are now just a click away!</Text>
+        <Text style={styles.subTitle}>Snipy are now just a click away!</Text>
         <View style={styles.buttonContainer}>
           <TouchableOpacity
             style={[
@@ -41,29 +43,30 @@ export default LandingScreen;
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: colors.white,
+    backgroundColor: '#e3eaff',
     alignItems: 'center',
   },
   bannerImage: {
-    marginVertical: 30,
-    height: "40%",
+    marginVertical: 20,
+    height: "50%",
     width: "100%",
     resizeMode: "contain",
+    fontWeight: '800',
   },
   title: {
-    fontSize: 40,
-    fontFamily: fonts.SemiBold,
+    fontSize: 30,
+    fontFamily: fonts.Bold,
     paddingHorizontal: 20,
     textAlign: 'center',
-    color: colors.primary,
-    marginVertical: 20,
+    color: 'black',
+    marginVertical: 10,
   },
   subTitle: {
     fontSize: 18,
     paddingHorizontal: 20,
     textAlign: 'center',
     color: colors.secondary,
-    fontFamily: fonts.Medium,
+    fontFamily: fonts.SemiBold,
     marginVertical: 20,
   },
   buttonContainer: {

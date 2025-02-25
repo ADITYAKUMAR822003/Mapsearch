@@ -1,5 +1,5 @@
 import React, { useState, useCallback } from 'react';
-import { Text, ActivityIndicator, TouchableOpacity, View, Alert, SafeAreaView } from 'react-native';
+import { Text, ActivityIndicator, TouchableOpacity, View, Alert, SafeAreaView, } from 'react-native';
 import { GlobalStyle } from '../styles/GlobalStyle';
 import { colors } from '../utility/colors';
 import CustomButton from '../components/CustomButton';
@@ -8,6 +8,7 @@ import { useNavigation, useFocusEffect } from '@react-navigation/native';
 import Strings from '../localization/strings';
 import Config from 'react-native-config';
 import axios from 'axios';
+
 
 const SignupScreen = () => {
   const navigation = useNavigation();
@@ -97,6 +98,7 @@ const SignupScreen = () => {
     }, []),
   );
 
+
   return (
     <SafeAreaView style={{ flex: 1 }}>
       <View style={GlobalStyle.container}>
@@ -108,14 +110,14 @@ const SignupScreen = () => {
           <CustomTextInput
             value={username}
             onChangeText={setUsername}
-            placeholder={Strings.usernamePlaceholder}
+            placeholder={Strings.usernamePlaceholder + ' *'}
             iconName="user"
             errorMessage={error.username}
           />
           <CustomTextInput
             value={email}
             onChangeText={setEmail}
-            placeholder={Strings.emailPlaceholder}
+            placeholder={Strings.emailPlaceholder + ' *'}
             keyboardType="email-address"
             iconEmail="mail-outline"
             errorMessage={error.email}
@@ -123,7 +125,7 @@ const SignupScreen = () => {
           <CustomTextInput
             value={password}
             onChangeText={setPassword}
-            placeholder={Strings.passwordPlaceholder}
+            placeholder={Strings.passwordPlaceholder + ' *'}
             iconName="lock"
             secureTextEntry={secureEntery}
             onPress={() => setSecureEntery(!secureEntery)}
@@ -133,7 +135,7 @@ const SignupScreen = () => {
           <CustomTextInput
             value={mobileNumber}
             onChangeText={setPhoneNumber}
-            placeholder={Strings.mobilePlaceholder}
+            placeholder={Strings.mobilePlaceholder + ' *'}
             keyboardType="phone-pad"
             iconName="screen-smartphone"
             maxLength={10}
@@ -154,3 +156,4 @@ const SignupScreen = () => {
 };
 
 export default SignupScreen;
+

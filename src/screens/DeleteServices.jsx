@@ -204,7 +204,7 @@ export default DeleteServices;
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        backgroundColor: colors.white,
+        backgroundColor: colors.success,
         padding: 20,
     },
     headingText: {

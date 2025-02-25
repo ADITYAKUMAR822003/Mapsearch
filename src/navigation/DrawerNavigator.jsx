@@ -9,13 +9,18 @@ import SearchServices from '../screens/SearchServices';
 import DisplayServices from '../screens/DisplayServices';
 
 const Drawer = createDrawerNavigator();
-
 const DrawerNavigator = () => {
   const route = useRoute();
   const { username } = route.params || {};
 
   return (
-    <Drawer.Navigator drawerContent={(props) => <CustomDrawer {...props} />} >
+    <Drawer.Navigator drawerContent={(props) => <CustomDrawer {...props} />}
+    screenOptions={{
+      drawerStyle: { backgroundColor: '#1E1E1E' }, 
+      drawerLabelStyle: { color: 'white' }, 
+      headerStyle: { backgroundColor: '#007ACC' }, 
+      headerTintColor: 'white', 
+    }} >
       <Drawer.Screen name="HomeScreen" component={HomeScreen} initialParams={{ username }} />
       <Drawer.Screen name="AddServices" component={AddServices} initialParams={{ username }} />
       <Drawer.Screen name="DeleteServices" component={DeleteServices} initialParams={{ username }} />
@@ -26,3 +31,5 @@ const DrawerNavigator = () => {
 };
 
 export default DrawerNavigator;
+
+

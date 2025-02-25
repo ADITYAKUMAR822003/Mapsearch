@@ -57,8 +57,7 @@ const SearchServices = () => {
                             const { latitude, longitude } = info.coords;
                             setLatitude(latitude);
                             setLongitude(longitude);
-                            console.log("Latitude:", latitude);
-                            console.log("Longitude:", longitude);
+                            console.log("Latitude:", "Longitude:", latitude, longitude);
                         },
                         (error) => {
                             console.log("Geolocation Error:", error);
@@ -85,7 +84,7 @@ const SearchServices = () => {
                     if (data.status === "OK") {
                         const formattedAddress = data.results[0].formatted_address;
                         setAddress(formattedAddress);
-                        console.log("Address:", formattedAddress);
+                        // console.log("Address:", formattedAddress);
                     } else {
                         console.log("Unable to fetch address. Status:", data.status);
                     }
@@ -132,7 +131,7 @@ const SearchServices = () => {
                             value: category,
                         }));
                         setCategories(formattedCategories);
-                        console.log('Server Response:', formattedCategories);
+                        // console.log('Server Response:', formattedCategories);
                     }
                 } catch (error) {
                     if (error.response) {
@@ -167,7 +166,7 @@ const SearchServices = () => {
                     subcategories: servicesData[category],
                 }));
                 setCategories(formattedCategories);
-                console.log('Server Response:', formattedCategories);
+                // console.log('Server Response:', formattedCategories);
                 const fetchedCategoryData = formattedCategories.find((item) => item.key === selectedCategory);
                 setSubcategories(fetchedCategoryData.subcategories);
             }
@@ -194,7 +193,7 @@ const SearchServices = () => {
             const response = await axios.post(apiUrl, data);
             if (response.status === 200) {
                 navigation.navigate('DisplayServices', { places: response.data, includedTypes });
-                console.log('Server Response:', response.data);
+                // console.log('Server Response:', response.data);
             } else {
                 console.log('Unexpected response:', response.status);
             }
@@ -349,13 +348,15 @@ const styles = StyleSheet.create({
         paddingHorizontal: 10,
         flexDirection: 'row',
         alignItems: 'center',
-        marginVertical: 20,
+        marginVertical: 10,
         marginBottom: 0,
+       // backgroundColor: 'black',
     },
     textInput: {
         flex: 1,
         color: colors.primary,
         fontFamily: fonts.Medium,
+        backgroundColor: '#e3eaff',
     },
     icon: {
         paddingHorizontal: 10,
