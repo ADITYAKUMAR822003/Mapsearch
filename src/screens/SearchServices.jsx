@@ -235,7 +235,11 @@ const SearchServices = () => {
         setReset(false);
     };
 
-    const handleClear = () => placesRef.current?.clear();
+    const handleClear = () => {
+        placesRef.current?.setAddressText('');
+        setAddress('');
+        setEditable(true);
+    };
 
     useEffect(() => {
         if (select) {
@@ -299,17 +303,13 @@ const SearchServices = () => {
                                         name="times-circle"
                                         size={20}
                                         style={styles.icon}
-                                        onPress={() => {
-                                            setAddress('');
-                                            placesRef.current?.setAddressText('');
-                                            setEditable(true);
-                                        }
-                                        }
+                                        onPress={handleClear}
                                     />
                                 )}
                                 renderRow={(data) => (<View><Text style={styles.rowText}>{data.description}</Text></View>)}
                                 styles={{ textInputContainer: styles.inputContainer, textInput: styles.textInput, listView: styles.listView }}
                                 textInputProps={{
+                                    clearButtonMode: "never",
                                     onChangeText: (text) => {
                                         if (editable) {
                                             setAddress(text);
