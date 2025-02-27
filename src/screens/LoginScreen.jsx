@@ -1,11 +1,13 @@
 import React, { useState, useCallback } from 'react';
 import { StyleSheet, Text, ActivityIndicator, TouchableOpacity, View, Alert, SafeAreaView } from 'react-native';
+import { useNavigation, useFocusEffect } from '@react-navigation/native';
+import CustomTextInput from '../components/CustomTextInput';
+import LinearGradient from 'react-native-linear-gradient';
 import Strings from '../localization/strings';
 import { GlobalStyle } from '../styles/GlobalStyle';
 import CustomButton from '../components/CustomButton';
 import { colors } from '../utility/colors';
-import CustomTextInput from '../components/CustomTextInput';
-import { useNavigation, useFocusEffect } from '@react-navigation/native';
+import { fonts } from '../utility/fonts';
 import Config from 'react-native-config';
 import axios from 'axios';
 
@@ -70,8 +72,7 @@ const LoginScreen = () => {
     try {
       setLoading(true);
       if (showUser && validateUser()) {
-        const apiUrl =
-          `${baseUrl}/auth/login`;
+        const apiUrl = `${baseUrl}/auth/login`;
         const data = { username, password };
         const response = await axios.post(apiUrl, data);
         if (response.status === 200) {
@@ -79,8 +80,7 @@ const LoginScreen = () => {
           console.log('Server Response:', response.data);
         }
       } else if (showPhone && validatePhone()) {
-        const apiUrl =
-          `${baseUrl}/auth/login-with-mobile`;
+        const apiUrl = `${baseUrl}/auth/login-with-mobile`;
         const data = { mobileNumber };
         const response = await axios.post(apiUrl, data);
         if (response.status === 200) {
@@ -88,8 +88,7 @@ const LoginScreen = () => {
           console.log('Server Response:', response.data);
         }
       } else if (showEmail && validateEmail()) {
-        const apiUrl =
-          `${baseUrl}/auth/login-with-email`;
+        const apiUrl = `${baseUrl}/auth/login-with-email`;
         const data = { email };
         const response = await axios.post(apiUrl, data);
         if (response.status === 200) {
@@ -156,21 +155,21 @@ const LoginScreen = () => {
   };
 
   return (
-    <SafeAreaView style={{ flex: 1 }}>
-      <View style={GlobalStyle.container}>
-        {loading && <ActivityIndicator size={50} color={colors.success} style={GlobalStyle.loader} />}
-        <View style={GlobalStyle.textContainer}>
-          <Text style={GlobalStyle.headingText}>{Strings.loginTitle}</Text>
-        </View>
-        <View style={styles.headerContainer}>
-          <TouchableOpacity onPress={handleUserClick}>
-            <Text style={[GlobalStyle.signupText, showUser && GlobalStyle.selectedText]}>{Strings.username}</Text>
+    <SafeAreaView style={GlobalStyle.container}>
+      <LinearGradient colors={['#003AAA', '#009AA5']} style={styles.headerBackground}>
+        <Text style={styles.headerText}>{Strings.loginTitle}</Text>
+      </LinearGradient>
+      {loading && <ActivityIndicator size={50} color={colors.success} style={GlobalStyle.loader} />}
+      <View style={styles.card}>
+        <View style={styles.tabContainer}>
+          <TouchableOpacity onPress={handleUserClick} style={[styles.tab, showUser && styles.activeTab]}>
+            <Text style={[styles.tabText, showUser && styles.activeTabText]}>{Strings.username}</Text>
           </TouchableOpacity>
-          <TouchableOpacity onPress={handlePhoneClick}>
-            <Text style={[GlobalStyle.signupText, showPhone && GlobalStyle.selectedText]}>{Strings.mobile}</Text>
+          <TouchableOpacity onPress={handlePhoneClick} style={[styles.tab, showPhone && styles.activeTab]}>
+            <Text style={[styles.tabText, showPhone && styles.activeTabText]}>{Strings.mobile}</Text>
           </TouchableOpacity>
-          <TouchableOpacity onPress={handleEmailClick}>
-            <Text style={[GlobalStyle.signupText, showEmail && GlobalStyle.selectedText]}>{Strings.email}</Text>
+          <TouchableOpacity onPress={handleEmailClick} style={[styles.tab, showEmail && styles.activeTab]}>
+            <Text style={[styles.tabText, showEmail && styles.activeTabText]}>{Strings.email}</Text>
           </TouchableOpacity>
         </View>
         <View>
@@ -240,9 +239,44 @@ const LoginScreen = () => {
 export default LoginScreen;
 
 const styles = StyleSheet.create({
-  headerContainer: {
+  headerBackground: {
+    paddingVertical: 50,
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  headerText: {
+    fontSize: 22,
+    fontWeight: 'bold',
+    color: colors.light,
+  },
+  card: {
+    backgroundColor: colors.white,
+    marginHorizontal: 10,
+    marginVertical: 20,
+    padding: 20,
+    borderRadius: 12,
+    elevation: 5,
+  },
+  tabContainer: {
     flexDirection: 'row',
     justifyContent: 'space-around',
-    marginVertical: 10,
+    marginBottom: 10,
+  },
+  tab: {
+    flex: 1,
+    paddingVertical: 10,
+    alignItems: 'center',
+  },
+  activeTab: {
+    backgroundColor: colors.info,
+    borderRadius: 8,
+  },
+  tabText: {
+    color: colors.dark,
+    fontFamily: fonts.SemiBold,
+  },
+  activeTabText: {
+    color: colors.light,
+    fontFamily: fonts.SemiBold,
   },
 });

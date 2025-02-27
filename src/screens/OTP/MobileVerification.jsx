@@ -115,8 +115,8 @@ const MobileVerification = () => {
   };
 
   return (
-    <SafeAreaView style={{ flex: 1 }}>
-      <View style={GlobalStyle.container}>
+    <SafeAreaView style={GlobalStyle.container}>
+      <View style={{ padding: 20 }}>
         {loading && <ActivityIndicator size={50} color={colors.success} style={GlobalStyle.loader} />}
         <BackButton onPress={handleGoBack} />
         <View style={GlobalStyle.textContainer}>

@@ -6,7 +6,6 @@ export const GlobalStyle = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: colors.white,
-    padding: 20,
   },
   backButtonWrapper: {
     height: 40,
@@ -18,6 +17,9 @@ export const GlobalStyle = StyleSheet.create({
   },
   textContainer: {
     marginVertical: 10,
+  },
+  headingContainer: {
+    alignItems: 'center',
   },
   headingText: {
     fontSize: 32,
@@ -52,8 +54,11 @@ export const GlobalStyle = StyleSheet.create({
   },
   loginButtonWrapper: {
     backgroundColor: colors.primary,
-    borderRadius: 100,
-    marginVertical: 20,
+    borderRadius: 12,
+    marginVertical: 5,
+    justifyContent: 'center',
+    alignItems: 'center',
+    marginVertical: 10,
   },
   loginText: {
     color: colors.white,
@@ -68,6 +73,13 @@ export const GlobalStyle = StyleSheet.create({
     fontSize: 14,
     fontFamily: fonts.Regular,
     color: colors.primary,
+  },
+  card: {
+    backgroundColor: colors.gray,
+    padding: 10,
+    margin: 10,
+    borderRadius: 12,
+    elevation: 3,
   },
   footerContainer: {
     flexDirection: 'row',

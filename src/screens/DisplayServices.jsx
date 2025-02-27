@@ -1,5 +1,5 @@
 import React from 'react';
-import { Text, View, ScrollView, StyleSheet, } from 'react-native';
+import { Text, View, ScrollView, StyleSheet, SafeAreaView } from 'react-native';
 import { useNavigation, useRoute } from '@react-navigation/native';
 import { GlobalStyle } from '../styles/GlobalStyle';
 import { colors } from '../utility/colors';
@@ -11,13 +11,15 @@ const DisplayServices = () => {
     const { places, includedTypes } = route.params || {};
 
     return (
-        <View style={GlobalStyle.container}>
+        <SafeAreaView style={GlobalStyle.container}>
             <ScrollView>
                 {Array.isArray(places) && places.length > 0 && !places.some(place => place?.error) ? (
                     <>
-                        <Text style={GlobalStyle.headingText}>List of {includedTypes} nearby</Text>
+                        <View style={GlobalStyle.headingContainer}>
+                            <Text style={GlobalStyle.headingText}>List of {includedTypes} nearby</Text>
+                        </View>
                         {places.map((place, index) => (
-                            <View key={index} style={styles.card}>
+                            <View key={index} style={GlobalStyle.card}>
                                 {place?.displayName && <Text style={styles.name}>{place.displayName}</Text>}
                                 {['formattedAddress', 'rating', 'userRatingCount', 'paymentOptions', 'nationalPhoneNumber'].map((key) => {
                                     const keyDisplayNameMap = {
@@ -56,24 +58,13 @@ const DisplayServices = () => {
                     <Text style={GlobalStyle.headingText}>No Service Available for {includedTypes}</Text>
                 )}
             </ScrollView>
-        </View>
+        </SafeAreaView>
     );
 };
 
 export default DisplayServices;
 
 const styles = StyleSheet.create({
-    card: {
-        backgroundColor: '#fff',
-        padding: 15,
-        marginVertical: 10,
-        borderRadius: 8,
-        shadowColor: '#000',
-        shadowOpacity: 0.1,
-        shadowRadius: 5,
-        shadowOffset: { width: 0, height: 3 },
-        elevation: 3,
-    },
     name: {
         fontSize: 20,
         fontFamily: fonts.SemiBold,
@@ -105,6 +96,6 @@ const styles = StyleSheet.create({
     },
     noServiceText: {
         fontSize: 16,
-        color: 'gray',
+        color: colors.gray,
     },
 });

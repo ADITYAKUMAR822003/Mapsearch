@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Text, ActivityIndicator, View, Alert } from 'react-native';
+import { Text, ActivityIndicator, View, Alert, SafeAreaView } from 'react-native';
 import { GlobalStyle } from '../styles/GlobalStyle';
 import BackButton from '../components/BackButton';
 import CustomButton from '../components/CustomButton';
@@ -72,41 +72,43 @@ const ResetPassword = () => {
   const clearFields = () => (setPassword(''), setConfirmPassword(''));
 
   return (
-    <View style={GlobalStyle.container}>
-      {loading && <ActivityIndicator size={50} color={colors.success} style={GlobalStyle.loader} />}
-      <BackButton onPress={handleGoBack} />
-      <View style={GlobalStyle.textContainer}>
-        <Text style={GlobalStyle.headingText}>{Strings.passwordPlaceholder}</Text>
+    <SafeAreaView style={GlobalStyle.container}>
+      <View style={{ padding: 20 }}>
+        {loading && <ActivityIndicator size={50} color={colors.success} style={GlobalStyle.loader} />}
+        <BackButton onPress={handleGoBack} />
+        <View style={GlobalStyle.headingContainer}>
+          <Text style={GlobalStyle.headingText}>{Strings.resetTitle}</Text>
+        </View>
+        <View>
+          <CustomTextInput value={username} iconName="user" editable={false} />
+          <CustomTextInput
+            value={newPassword}
+            onChangeText={setPassword}
+            placeholder={Strings.newPassword}
+            iconName="lock"
+            secureTextEntry={secureEntery}
+            onPress={() => setSecureEntery(!secureEntery)}
+            eyename={'eye'}
+          />
+          {error.newPassword && (
+            <Text style={GlobalStyle.errorText}>{error.newPassword}</Text>
+          )}
+          <CustomTextInput
+            value={confirmPassword}
+            onChangeText={setConfirmPassword}
+            placeholder={Strings.conformPassword}
+            iconName="lock"
+            secureTextEntry={secureConfirm}
+            onPress={() => setSecureConfirm(!secureConfirm)}
+            eyename={'eye'}
+          />
+          {error.confirmPassword && (
+            <Text style={GlobalStyle.errorText}>{error.confirmPassword}</Text>
+          )}
+        </View>
+        <CustomButton title={Strings.resetButton} onPress={handleReset} />
       </View>
-      <View>
-        <CustomTextInput value={username} iconName="user" editable={false} />
-        <CustomTextInput
-          value={newPassword}
-          onChangeText={setPassword}
-          placeholder={Strings.newPassword}
-          iconName="lock"
-          secureTextEntry={secureEntery}
-          onPress={() => setSecureEntery(!secureEntery)}
-          eyename={'eye'}
-        />
-        {error.newPassword && (
-          <Text style={GlobalStyle.errorText}>{error.newPassword}</Text>
-        )}
-        <CustomTextInput
-          value={confirmPassword}
-          onChangeText={setConfirmPassword}
-          placeholder={Strings.conformPassword}
-          iconName="lock"
-          secureTextEntry={secureConfirm}
-          onPress={() => setSecureConfirm(!secureConfirm)}
-          eyename={'eye'}
-        />
-        {error.confirmPassword && (
-          <Text style={GlobalStyle.errorText}>{error.confirmPassword}</Text>
-        )}
-      </View>
-      <CustomButton title={Strings.resetButton} onPress={handleReset} />
-    </View>
+    </SafeAreaView>
   );
 };
 

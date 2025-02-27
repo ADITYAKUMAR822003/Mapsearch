@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Text, ActivityIndicator, View, Alert } from 'react-native';
+import { Text, ActivityIndicator, View, Alert, SafeAreaView } from 'react-native';
 import { GlobalStyle } from '../styles/GlobalStyle';
 import BackButton from '../components/BackButton';
 import CustomButton from '../components/CustomButton';
@@ -16,7 +16,7 @@ const ForgotPassword = () => {
     const [loading, setLoading] = useState(false);
     const [username, setUsername] = useState('');
     const [error, setError] = useState('');
-    
+
     const handleGoBack = () => navigation.goBack();
 
     const validateInput = () => {
@@ -61,25 +61,27 @@ const ForgotPassword = () => {
     const clearFields = () => setUsername('');
 
     return (
-        <View style={GlobalStyle.container}>
-            {loading && <ActivityIndicator size={50} color={colors.success} style={GlobalStyle.loader} />}
-            <BackButton onPress={handleGoBack} />
-            <View style={GlobalStyle.textContainer}>
-                <Text style={GlobalStyle.headingText}>{Strings.resetTitle}</Text>
+        <SafeAreaView style={GlobalStyle.container}>
+            <View style={{ padding: 20 }}>
+                {loading && <ActivityIndicator size={50} color={colors.success} style={GlobalStyle.loader} />}
+                <BackButton onPress={handleGoBack} />
+                <View style={GlobalStyle.headingContainer}>
+                    <Text style={GlobalStyle.headingText}>{Strings.resetTitle}</Text>
+                </View>
+                <View>
+                    <CustomTextInput
+                        value={username}
+                        onChangeText={setUsername}
+                        placeholder={Strings.usernamePlaceholder}
+                        iconName="user"
+                    />
+                    {error.username && (
+                        <Text style={GlobalStyle.errorText}>{error.username}</Text>
+                    )}
+                </View>
+                <CustomButton title={Strings.resetButton} onPress={handleReset} />
             </View>
-            <View>
-                <CustomTextInput
-                    value={username}
-                    onChangeText={setUsername}
-                    placeholder={Strings.usernamePlaceholder}
-                    iconName="user"
-                />
-                {error.username && (
-                    <Text style={GlobalStyle.errorText}>{error.username}</Text>
-                )}
-            </View>
-            <CustomButton title={Strings.resetButton} onPress={handleReset} />
-        </View>
+        </SafeAreaView>
     );
 };
 

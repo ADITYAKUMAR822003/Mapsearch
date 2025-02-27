@@ -1,12 +1,11 @@
 import React, { useState, useCallback, useEffect } from 'react';
-import { Text, View, StyleSheet, ActivityIndicator, Alert } from 'react-native';
+import { Text, View, ActivityIndicator, Alert, SafeAreaView } from 'react-native';
 import { useNavigation, useRoute, useFocusEffect } from '@react-navigation/native';
 import CustomSelectList from '../components/CustomSelectList';
 import CustomButton from '../components/CustomButton';
 import { GlobalStyle } from '../styles/GlobalStyle';
 import Strings from '../localization/strings';
 import { colors } from '../utility/colors';
-import { fonts } from '../utility/fonts';
 import Config from 'react-native-config';
 import axios from 'axios';
 
@@ -151,50 +150,39 @@ const AddServices = () => {
     );
 
     return (
-        <View style={GlobalStyle.container}>
-            {loading && <ActivityIndicator size={50} color={colors.success} style={GlobalStyle.loader} />}
-            <View>
-                <Text style={styles.headingText}>{Strings.addYour}</Text>
-            </View>
-            {!reset && (
-                <>
-                    <CustomSelectList
-                        onSelect={() => setSelect(true)}
-                        setSelected={handleCategorySelect}
-                        data={categories}
-                        placeholder={Strings.categoryPlaceholder}
-                        searchPlaceholder={Strings.searchCatPlaceholder}
-                        error={error.category}
-                    />
-                    {!select && (
+        <SafeAreaView style={GlobalStyle.container}>
+            <View style={{ padding: 20 }}>
+                {loading && <ActivityIndicator size={50} color={colors.success} style={GlobalStyle.loader} />}
+                <View style={GlobalStyle.headingContainer}>
+                    <Text style={GlobalStyle.headingText}>{Strings.addYour}</Text>
+                </View>
+                {!reset && (
+                    <>
                         <CustomSelectList
-                            setSelected={setSubCategory}
-                            data={subcategories || []}
-                            placeholder={Strings.subCategoryPlaceholder}
-                            searchPlaceholder={Strings.searchSubPlaceholder}
-                            error={error.subcategory}
-                            save="value"
-                            multiple={true}
+                            onSelect={() => setSelect(true)}
+                            setSelected={handleCategorySelect}
+                            data={categories}
+                            placeholder={Strings.categoryPlaceholder}
+                            searchPlaceholder={Strings.searchCatPlaceholder}
+                            error={error.category}
                         />
-                    )}
-                </>
-            )}
-            <CustomButton title={Strings.otpButton} onPress={handleHome} />
-        </View>
+                        {!select && (
+                            <CustomSelectList
+                                setSelected={setSubCategory}
+                                data={subcategories || []}
+                                placeholder={Strings.subCategoryPlaceholder}
+                                searchPlaceholder={Strings.searchSubPlaceholder}
+                                error={error.subcategory}
+                                save="value"
+                                multiple={true}
+                            />
+                        )}
+                    </>
+                )}
+                <CustomButton title={Strings.otpButton} onPress={handleHome} />
+            </View>
+        </SafeAreaView>
     );
 };
 
 export default AddServices;
-
-const styles = StyleSheet.create({
-    container: {
-        flex: 1,
-        backgroundColor: colors.white,
-        padding: 20,
-    },
-    headingText: {
-        fontSize: 32,
-        color: colors.primary,
-        fontFamily: fonts.SemiBold,
-    },
-});

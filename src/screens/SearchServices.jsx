@@ -263,10 +263,10 @@ const SearchServices = () => {
 
     return (
         <KeyboardAvoidingView style={GlobalStyle.container}>
-            <ScrollView keyboardShouldPersistTaps="handled" contentContainerStyle={{ flexGrow: 1 }} >
+            <ScrollView keyboardShouldPersistTaps="handled" contentContainerStyle={{ flexGrow: 1, padding: 20 }} >
                 <View>
                     {loading && <ActivityIndicator size={50} color={colors.success} style={GlobalStyle.loader} />}
-                    <View>
+                    <View style={GlobalStyle.headingContainer}>
                         <Text style={GlobalStyle.headingText}>Search Your Services</Text>
                     </View>
                     {!reset && (
@@ -362,13 +362,19 @@ const styles = StyleSheet.create({
         paddingHorizontal: 10,
         flexDirection: 'row',
         alignItems: 'center',
-        marginVertical: 20,
+        marginVertical: 10,
         marginBottom: 0,
     },
     textInput: {
-        flex: 1,
+        marginTop: 5,
         color: colors.primary,
         fontFamily: fonts.Medium,
+        backgroundColor: colors.white,
+    },
+    listView: {
+        backgroundColor: colors.white,
+        borderRadius: 12,
+        elevation: 3,
     },
     icon: {
         paddingHorizontal: 10,
@@ -384,10 +390,6 @@ const styles = StyleSheet.create({
         marginLeft: 10,
         fontSize: 14,
         color: colors.secondary,
-    },
-    listView: {
-        maxHeight: 250,
-        overflow: 'scroll',
     },
     rowText: {
         fontSize: 16,

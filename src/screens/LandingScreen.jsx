@@ -8,29 +8,22 @@ import { fonts } from '../utility/fonts';
 
 const LandingScreen = () => {
   const navigation = useNavigation();
-  
+
   const handleLogin = () => navigation.navigate('LoginScreen');
   const handleSignup = () => navigation.navigate('SignupScreen');
 
   return (
-    <SafeAreaView style={{ flex: 1 }}>
-      <View style={GlobalStyle.container}>
-        <Image source={require('../assets/images/man.png')} style={styles.bannerImage} />
-        <Text style={styles.title}>Welcome to Service Search!</Text>
-        <Text style={styles.subTitle}>Our services are now just a click away!</Text>
-        <View style={styles.buttonContainer}>
-          <TouchableOpacity
-            style={[
-              styles.loginButtonWrapper,
-              { backgroundColor: colors.primary },
-            ]}
-            onPress={handleLogin}>
-            <Text style={styles.loginButtonText}>{Strings.loginButton}</Text>
-          </TouchableOpacity>
-          <TouchableOpacity style={[styles.loginButtonWrapper]} onPress={handleSignup}>
-            <Text style={styles.signupButtonText}>{Strings.signupButton}</Text>
-          </TouchableOpacity>
-        </View>
+    <SafeAreaView style={GlobalStyle.container}>
+      <Image source={require('../assets/images/logo.jpg')} style={styles.bannerImage} />
+      <Text style={styles.title}>Welcome to Service Search!</Text>
+      <Text style={styles.subTitle}>Snipy are now just a click away!</Text>
+      <View style={styles.buttonContainer}>
+        <TouchableOpacity style={[styles.loginButtonWrapper, { backgroundColor: colors.primary }]} onPress={handleLogin}>
+          <Text style={styles.loginButtonText}>{Strings.loginButton}</Text>
+        </TouchableOpacity>
+        <TouchableOpacity style={[styles.loginButtonWrapper]} onPress={handleSignup}>
+          <Text style={styles.signupButtonText}>{Strings.signupButton}</Text>
+        </TouchableOpacity>
       </View>
     </SafeAreaView>
   );
@@ -39,23 +32,18 @@ const LandingScreen = () => {
 export default LandingScreen;
 
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: colors.white,
-    alignItems: 'center',
-  },
   bannerImage: {
-    marginVertical: 30,
-    height: "40%",
+    marginVertical: 20,
+    height: "50%",
     width: "100%",
     resizeMode: "contain",
   },
   title: {
-    fontSize: 40,
-    fontFamily: fonts.SemiBold,
+    fontSize: 30,
+    fontFamily: fonts.Bold,
     paddingHorizontal: 20,
     textAlign: 'center',
-    color: colors.primary,
+    color: colors.dark,
     marginVertical: 20,
   },
   subTitle: {
@@ -63,7 +51,7 @@ const styles = StyleSheet.create({
     paddingHorizontal: 20,
     textAlign: 'center',
     color: colors.secondary,
-    fontFamily: fonts.Medium,
+    fontFamily: fonts.SemiBold,
     marginVertical: 20,
   },
   buttonContainer: {

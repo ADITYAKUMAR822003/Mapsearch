@@ -1,6 +1,7 @@
 import * as React from 'react';
 import { createDrawerNavigator } from '@react-navigation/drawer';
 import { useRoute } from '@react-navigation/native';
+import { colors } from '../utility/colors';
 import CustomDrawer from './CustomDrawer';
 import HomeScreen from '../screens/HomeScreen';
 import AddServices from '../screens/AddServices';
@@ -15,7 +16,7 @@ const DrawerNavigator = () => {
   const { username } = route.params || {};
 
   return (
-    <Drawer.Navigator drawerContent={(props) => <CustomDrawer {...props} />} >
+    <Drawer.Navigator drawerContent={(props) => <CustomDrawer {...props} />} screenOptions={{ headerStyle: { backgroundColor: colors.info }, headerTintColor: colors.light }}>
       <Drawer.Screen name="HomeScreen" component={HomeScreen} initialParams={{ username }} />
       <Drawer.Screen name="AddServices" component={AddServices} initialParams={{ username }} />
       <Drawer.Screen name="DeleteServices" component={DeleteServices} initialParams={{ username }} />
