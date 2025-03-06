@@ -21,36 +21,44 @@ const DisplayServices = () => {
                         {places.map((place, index) => (
                             <View key={index} style={GlobalStyle.card}>
                                 {place?.displayName && <Text style={styles.name}>{place.displayName}</Text>}
-                                {['formattedAddress', 'rating', 'userRatingCount', 'paymentOptions', 'nationalPhoneNumber'].map((key) => {
+                                {place?.formattedAddress && (
+                                    <Text style={[styles.value, styles.centered]}>{place.formattedAddress}</Text>
+                                )}
+                                {["rating", "paymentOptions", "nationalPhoneNumber"].map((key) => {
                                     const keyDisplayNameMap = {
-                                        formattedAddress: 'Address',
-                                        rating: 'Rating',
-                                        userRatingCount: 'User Ratings',
-                                        paymentOptions: 'Payment Options',
-                                        nationalPhoneNumber: 'Phone Number',
+                                        rating: "Rating",
+                                        paymentOptions: "Payment Options",
+                                        nationalPhoneNumber: "Phone Number",
                                     };
-                                    const value = place[key] !== undefined && place[key] !== null ?
-                                        (key === 'paymentOptions' && typeof place[key] === 'object' ?
-                                            Object.entries(place[key]).map(([option, value]) => `${option}: ${value ? 'Yes' : 'No'}`).join(', ') :
-                                            typeof place[key] === 'object' ? JSON.stringify(place[key], null, 2) : place[key]
-                                        ) : 'N/A';
+                                    const value = place[key] !== undefined && place[key] !== null
+                                        ? (key === "paymentOptions" && typeof place[key] === "object"
+                                            ? Object.entries(place[key]).map(([option, value]) => `${option}: ${value ? "Yes" : "No"}`).join(", ")
+                                            : typeof place[key] === "object" ? JSON.stringify(place[key], null, 2) : place[key])
+                                        : "N/A";
                                     return (
                                         <View key={key} style={styles.item}>
                                             <Text style={styles.label}>{keyDisplayNameMap[key] || key}:</Text>
-                                            <Text style={styles.value}>{value}</Text>
+                                            <Text style={styles.value}>
+                                                {key === "rating" && place.userRatingCount !== undefined
+                                                    ? value !== "N/A"
+                                                        ? `${value} (${place.userRatingCount} reviews)`
+                                                        : "N/A"
+                                                    : value}
+                                            </Text>
                                         </View>
                                     );
                                 })}
                                 {Object.keys(place)
-                                    .filter(key => !['displayName', 'formattedAddress', 'rating', 'userRatingCount', 'paymentOptions', 'nationalPhoneNumber'].includes(key))
+                                    .filter(key => !["displayName", "formattedAddress", "rating", "paymentOptions", "nationalPhoneNumber", "userRatingCount"].includes(key))
                                     .map((key) => (
                                         <View key={key} style={styles.item}>
                                             <Text style={styles.label}>{key}:</Text>
                                             <Text style={styles.value}>
-                                                {place[key] !== undefined && place[key] !== null ? (typeof place[key] === 'object' ? JSON.stringify(place[key], null, 2) : place[key]) : 'N/A'}
+                                                {place[key] !== undefined && place[key] !== null ? (typeof place[key] === "object" ? JSON.stringify(place[key], null, 2) : place[key]) : "N/A"}
                                             </Text>
                                         </View>
-                                    ))}
+                                    ))
+                                }
                             </View>
                         ))}
                     </>
@@ -70,24 +78,27 @@ const styles = StyleSheet.create({
         fontFamily: fonts.SemiBold,
         textAlign: 'center',
         color: colors.primary,
+        marginVertical: 8,
     },
     item: {
         flexDirection: 'row',
         alignItems: 'center',
-        marginVertical: 4,
+        marginVertical: 8,
     },
     label: {
         color: colors.primary,
         fontFamily: fonts.SemiBold,
-        marginRight: 8,
+        marginLeft: 10,
         width: 130,
         fontSize: 16,
     },
     value: {
         color: colors.primary,
+        fontFamily: fonts.Regular,
         fontSize: 16,
         flex: 1,
         flexWrap: 'wrap',
+        marginLeft: 10,
     },
     noService: {
         justifyContent: 'center',
