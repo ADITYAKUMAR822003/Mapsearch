@@ -594,7 +594,7 @@
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = 68JRD3W7BD;
+				DEVELOPMENT_TEAM = HJKQKX6HW7;
 				ENABLE_BITCODE = NO;
 				INFOPLIST_FILE = MapSearch/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = Snipy;
@@ -608,7 +608,7 @@
 					"-ObjC",
 					"-lc++",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = "org.reactjs.native.example.$(PRODUCT_NAME:rfc1034identifier)";
+				PRODUCT_BUNDLE_IDENTIFIER = org.reactjs.native.snipy;
 				"PRODUCT_BUNDLE_IDENTIFIER[sdk=iphoneos*]" = com.snipy.mapsearch;
 				PRODUCT_NAME = MapSearch;
 				PROVISIONING_PROFILE_SPECIFIER = "";
@@ -627,7 +627,7 @@
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = 68JRD3W7BD;
+				DEVELOPMENT_TEAM = HJKQKX6HW7;
 				INFOPLIST_FILE = MapSearch/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = Snipy;
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -640,7 +640,7 @@
 					"-ObjC",
 					"-lc++",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = "org.reactjs.native.example.$(PRODUCT_NAME:rfc1034identifier)";
+				PRODUCT_BUNDLE_IDENTIFIER = org.reactjs.native.snipy;
 				"PRODUCT_BUNDLE_IDENTIFIER[sdk=iphoneos*]" = com.snipy.mapsearch;
 				PRODUCT_NAME = MapSearch;
 				PROVISIONING_PROFILE_SPECIFIER = "";
@@ -722,7 +722,10 @@
 					"-DFOLLY_CFG_NO_COROUTINES=1",
 					"-DFOLLY_HAVE_CLOCK_GETTIME=1",
 				);
-				OTHER_LDFLAGS = "$(inherited)  ";
+				OTHER_LDFLAGS = (
+					"$(inherited)",
+					" ",
+				);
 				REACT_NATIVE_PATH = "${PODS_ROOT}/../../node_modules/react-native";
 				SDKROOT = iphoneos;
 				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "$(inherited) DEBUG";
@@ -795,7 +798,10 @@
 					"-DFOLLY_CFG_NO_COROUTINES=1",
 					"-DFOLLY_HAVE_CLOCK_GETTIME=1",
 				);
-				OTHER_LDFLAGS = "$(inherited)  ";
+				OTHER_LDFLAGS = (
+					"$(inherited)",
+					" ",
+				);
 				REACT_NATIVE_PATH = "${PODS_ROOT}/../../node_modules/react-native";
 				SDKROOT = iphoneos;
 				USE_HERMES = true;
